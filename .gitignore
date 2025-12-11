@@ -1,0 +1,61 @@
+# -------------------------
+# Node Modules (Frontend + Backend + Root)
+# -------------------------
+node_modules/
+Frontend/**/node_modules/
+Backend/node_modules/
+
+# -------------------------
+# Build / Output Folders
+# -------------------------
+dist/
+build/
+.temp/
+.cache/
+
+# -------------------------
+# Environment Files (Secrets)
+# -------------------------
+.env
+.env.local
+.env.development
+.env.production
+.env.test
+
+# -------------------------
+# Logs
+# -------------------------
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+
+# -------------------------
+# System Files
+# -------------------------
+.DS_Store
+Thumbs.db
+
+# -------------------------
+# IDE / Editor Folders
+# -------------------------
+.vscode/
+.idea/
+*.swp
+
+# -------------------------
+# Temporary Files
+# -------------------------
+*.tmp
+*.log
+
+# -------------------------
+# TypeScript build outputs
+# -------------------------
+*.tsbuildinfo
+
+# -------------------------
+# Vite / React Cache
+# -------------------------
+.vite/
+.vite/deps/

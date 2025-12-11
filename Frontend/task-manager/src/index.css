@@ -1,0 +1,27 @@
+@import "tailwindcss";
+
+/* Custom Scrollbar for your theme */
+.custom-scrollbar::-webkit-scrollbar {
+  width: 10px;              /* scrollbar width */
+}
+
+.custom-scrollbar::-webkit-scrollbar-track {
+  background: #f2e3ce;      /* light beige track */
+  border-radius: 10px;
+}
+
+.custom-scrollbar::-webkit-scrollbar-thumb {
+  background: #d98917;      /* your orange theme color */
+  border-radius: 10px;
+  border: 2px solid #f2e3ce; /* creates spacing/padding effect */
+}
+
+.custom-scrollbar::-webkit-scrollbar-thumb:hover {
+  background: #c7770f;      /* darker shade on hover */
+}
+
+/* For Firefox */
+.custom-scrollbar {
+  scrollbar-width: thin;
+  scrollbar-color: #d98917 #f2e3ce;
+}
