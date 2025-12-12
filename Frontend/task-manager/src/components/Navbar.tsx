@@ -1,8 +1,10 @@
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [loggedIn, setLoggedIn] = useState(false);
+  const navigate = useNavigate();
 
   // Common nav menus
   const publicLinks = [
@@ -65,13 +67,15 @@ const Navbar = () => {
       {!loggedIn && (
         <div className="flex items-center gap-3">
           <button
-            onClick={() => setLoggedIn(true)}
+            onClick={() => {setLoggedIn(true); navigate("/login")}}
             className="px-4 py-2 border-b-2 border-transparent hover:border-black hover:-translate-y-0.5 transition-all duration-300 text-[#26323a] font-semibold text-sm"
           >
             Login
           </button>
 
-          <button className="px-4 py-2 bg-[#f2e3ce] border-b-2 border-transparent hover:border-black hover:-translate-y-0.5 transition-all duration-300 text-[#26323a] font-semibold text-sm">
+          <button className="px-4 py-2 bg-[#f2e3ce] border-b-2 border-transparent hover:border-black hover:-translate-y-0.5 transition-all duration-300 text-[#26323a] font-semibold text-sm"
+            onClick={() => navigate("/signup")}
+          >
             Sign Up
           </button>
         </div>

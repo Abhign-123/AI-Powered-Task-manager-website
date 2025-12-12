@@ -3,7 +3,7 @@ import Card from "./Card"
 
 const Home = () => {
   return (
-    <div className=" mx-[3vw] my-[3vh] w-[calc(100vw-6vw)] min-h-[calc(100vh-120px)] bg-[#f2e3ce] text-black rounded-xl shadow-md px-4 sm:px-6 py-6 flex flex-col items-center justify-center" >
+    <div className=" mx-[3vw] my-[3vh] w-[calc(100vw-6vw)] min-h-[calc(100vh-126px)] bg-[#f2e3ce] text-black rounded-xl shadow-md px-4 sm:px-6 py-6 flex flex-col items-center justify-center" >
         <div className="flex flex-col items-center justify-center gap-6 
                  px-4 
                 md:flex-row md:gap-20 
