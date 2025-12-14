@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -8,17 +8,16 @@ const Navbar = () => {
 
   // Common nav menus
   const publicLinks = [
-    { label: "Home", href: "#" },
+    { label: "Home", href: "/" },
     { label: "Features", href: "#" },
     { label: "Pricing", href: "#" },
     { label: "About", href: "#" },
   ];
 
   const privateLinks = [
-    { label: "Task Dashboard", href: "#" },
-    { label: "Manage Tasks", href: "#" },
-    { label: "AI Task Assistant", href: "#" },
-    { label: "Logout", href: "#" },
+    { label: "Task Dashboard", href: "/dashboard" },
+    { label: "Manage Tasks", href: "/managetasks" },
+    { label: "AI Task Assistant", href: "/aitaskassistant" },
   ];
 
   const linksToShow = loggedIn ? privateLinks : publicLinks;
@@ -45,9 +44,11 @@ const Navbar = () => {
         </button>
 
         {/* Desktop Navbar */}
-        <nav className="hidden md:flex gap-10 text-sm font-medium">
+        <nav className="hidden md:flex gap-8 text-sm font-medium">
           {linksToShow.map((link) => (
-            <a key={link.label} href={link.href} className="hover:underline">{link.label}</a>
+            <Link key={link.label} to={link.href} className="px-2 py-2 border-b-2 border-transparent hover:border-black hover:-translate-y-0.5 transition-all duration-300 text-[#26323a] font-semibold text-sm">
+              {link.label}
+            </Link>
           ))}
         </nav>
 
@@ -56,7 +57,7 @@ const Navbar = () => {
           <div className="absolute top-[10vh] left-[10vw] w-[40vw] px-4 bg-[#f2e3ce] md:hidden z-50 shadow-md rounded-xl py-4">
             <nav className="flex flex-col gap-5 text-sm font-medium">
               {linksToShow.map((link) => (
-                <a key={link.label} href={link.href} className="hover:underline">{link.label}</a>
+                <Link key={link.label} to={link.href} className="hover:underline">{link.label}</Link>
               ))}
             </nav>
           </div>
@@ -64,7 +65,7 @@ const Navbar = () => {
       </div>
 
       {/* Right side: Login / Signup */}
-      {!loggedIn && (
+      {!loggedIn ? (
         <div className="flex items-center gap-3">
           <button
             onClick={() => {setLoggedIn(true); navigate("/login")}}
@@ -79,6 +80,13 @@ const Navbar = () => {
             Sign Up
           </button>
         </div>
+      ) : (
+        <button
+            onClick={() => {setLoggedIn(false); navigate("/")}}
+            className="px-4 py-2 border-b-2 border-transparent hover:border-black hover:-translate-y-0.5 transition-all duration-300 text-[#26323a] font-semibold text-sm"
+          >
+            Logout
+          </button>
       )}
 
     </header>

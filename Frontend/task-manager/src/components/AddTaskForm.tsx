@@ -55,7 +55,7 @@ const AddTaskForm: React.FC<AddTaskFormProps> = ({updateValue}) => {
                             id="taskTitle"
                             className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#e09440] focus:border-[#e09440] bg-white text-gray-800 shadow-sm"
                             placeholder="Enter task title"
-                        />  
+                        />
                     </div>
                     
                     {/* Task Description Textarea */}

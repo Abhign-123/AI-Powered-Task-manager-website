@@ -1,7 +1,9 @@
 import React from 'react';
-import Navbar from '../components/Navbar.tsx';
 import AddTaskForm from '../components/AddTaskForm.tsx';
 import DoughnutChart from '../Charts/TaskStatsChart.tsx';
+import Filters from '../components/Filters.tsx';
+import TaskCard from '../components/TaskCard.tsx';
+import { useNavigate } from 'react-router-dom';
 
 
 // Tailwind color mapping based on the screenshot:
@@ -12,15 +14,28 @@ import DoughnutChart from '../Charts/TaskStatsChart.tsx';
 
 const Dashboard = () => {
     // Dummy data for rendering the task cards
-    const tasks = [1, 2, 3, 4, 5, 6];
     const completedTasks = 18;
     const pendingTasks = 6;
     const inProgressTasks = 4;
     const totalTasks = completedTasks + pendingTasks + inProgressTasks;
-    const percentageCompleted = (completedTasks / totalTasks) * 100;
+    //const percentageCompleted = (completedTasks / totalTasks) * 100;
+
+    const tasks = [
+        { title: "Design Homepage", status: "Completed", priority: "High", deadline: "2023-11-15", duration: 5 },
+        { title: "Develop API", status: "Completed", priority: "Medium", deadline: "2023-11-20", duration: 7 },
+        { title: "Write Documentation", status: "Pending", priority: "Low", deadline: "2023-11-25", duration: 3 },
+        { title: "Create Wireframes", status: "In Progress", priority: "High", deadline: "2023-12-01", duration: 4 },
+        { title: "Fix Bug #234", status: "In Progress", priority: "High", deadline: "2023-11-30", duration: 2 },
+        { title: "Deploy to Staging", status: "Completed", priority: "Medium", deadline: "2023-12-02", duration: 1 },
+        { title: "User Testing", status: "Pending", priority: "Medium", deadline: "2023-12-05", duration: 6 },
+        { title: "Implement Auth", status: "In Progress", priority: "High", deadline: "2023-12-10", duration: 8 },
+        { title: "Performance Audit", status: "Pending", priority: "Low", deadline: "2023-12-12", duration: 3 },
+        { title: "Release v1.0", status: "Planned", priority: "High", deadline: "2023-12-20", duration: 10 },
+    ];
     
     
     const [click, setClick] = React.useState(false)
+    const navigate = useNavigate();
     const Taskform= ()=>{
         setClick(true)
         console.log("clicked", click)    
@@ -33,7 +48,6 @@ const Dashboard = () => {
     return (
         // The main page body. Min-h-screen ensures the page structure is visible.
         <>
-        <Navbar />
         <div className="min-h-[calc(100vh-56px-6vh)]">
             {/* The main content container, matching the Navbar's horizontal alignment/boundaries */}
             {/* The py-6 is added for vertical padding below the Navbar */}
@@ -53,7 +67,10 @@ const Dashboard = () => {
                         </button>
                         {click && <AddTaskForm  updateValue={receivedData}/>}
                         {/* Note: In the screenshot, the button text is "Go To Task Management" and it is orange. */}
-                        <button className="px-5 py-2.5 text-sm font-semibold text-white bg-[#e09440] rounded-md shadow-md hover:opacity-80 transition duration-300">
+                        <button 
+                            onClick={() => navigate('/managetasks')}
+                            className="px-5 py-2.5 text-sm font-semibold text-white bg-[#e09440] rounded-md shadow-md hover:opacity-80 transition duration-300"
+                        >
                             Go To Task Management
                         </button>
                     </div>
@@ -95,50 +112,7 @@ const Dashboard = () => {
                         </div>
 
                         {/* Filters Card */}
-                        <div className="bg-[#f2e3ce] p-6 rounded-xl shadow-md grow">
-                            <h2 className="text-xl font-medium text-gray-700 mb-5">
-                                Filters
-                            </h2>
-                            <div className="flex flex-wrap sm:flex-nowrap gap-6 md:gap-20 lg:gap-25 text-gray-700">
-                                {/* Status Filters */}
-                                <div>
-                                    <h3 className="font-semibold mb-3">Status</h3>
-                                    <div className="flex flex-col space-y-2">
-                                        <label className="flex items-center text-base">
-                                            <input type="radio" name="status" className="form-radio h-4 w-4 text-[#e09440] focus:ring-[#e09440]" defaultChecked />
-                                            <span className="ml-2">All</span>
-                                        </label>
-                                        <label className="flex items-center text-base">
-                                            <input type="radio" name="status" className="form-radio h-4 w-4 text-[#e09440] focus:ring-[#e09440]" />
-                                            <span className="ml-2">Completed</span>
-                                        </label>
-                                        <label className="flex items-center text-base">
-                                            <input type="radio" name="status" className="form-radio h-4 w-4 text-[#e09440] focus:ring-[#e09440]" />
-                                            <span className="ml-2">Pending</span>
-                                        </label>
-                                    </div>
-                                </div>
-
-                                {/* Priority Filters */}
-                                <div>
-                                    <h3 className="font-semibold mb-3">Priority</h3>
-                                    <div className="flex flex-col space-y-2">
-                                        <label className="flex items-center text-base">
-                                            <input type="radio" name="priority" className="form-radio h-4 w-4 text-[#e09440] focus:ring-[#e09440]" />
-                                            <span className="ml-2">High</span>
-                                        </label>
-                                        <label className="flex items-center text-base">
-                                            <input type="radio" name="priority" className="form-radio h-4 w-4 text-[#e09440] focus:ring-[#e09440]" defaultChecked />
-                                            <span className="ml-2">Medium</span>
-                                        </label>
-                                        <label className="flex items-center text-base">
-                                            <input type="radio" name="priority" className="form-radio h-4 w-4 text-[#e09440] focus:ring-[#e09440]" />
-                                            <span className="ml-2">Low</span>
-                                        </label>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
+                        <Filters page="dashboard" />
                     </div>
 
                     {/* Right Column: Task Section (Scrolling Enabled) */}
@@ -151,21 +125,16 @@ const Dashboard = () => {
                         {/* flex-grow and overflow-y-auto ensure only this section scrolls */}
                         <div className="grow overflow-y-auto pr-2 custom-scrollbar"> 
                             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
-                                {tasks.map((taskNum) => (
-                                    <div key={taskNum} className="bg-[#e7d4b8] p-4 h-40 rounded-lg shadow-inner flex items-center justify-center text-lg font-medium text-gray-700 hover:shadow-xl transition duration-300">
-                                        Task {taskNum}
-                                    </div>
-                                ))}
-                                {/* Add more tasks to test the scroll functionality */}
-                                {tasks.map((taskNum) => (
-                                    <div key={taskNum + 6} className="bg-[#e7d4b8] p-4 h-40 rounded-lg shadow-inner flex items-center justify-center text-lg font-medium text-gray-700 hover:shadow-xl transition duration-300">
-                                        Task {taskNum + 6}
-                                    </div>
-                                ))}
-                                {tasks.map((taskNum) => (
-                                    <div key={taskNum + 12} className="bg-[#e7d4b8] p-4 h-40 rounded-lg shadow-inner flex items-center justify-center text-lg font-medium text-gray-700 hover:shadow-xl transition duration-300">
-                                        Task {taskNum + 12}
-                                    </div>
+                                {tasks.map((task, index) => (
+                                    <TaskCard
+                                        key={index}
+                                        title={task.title}
+                                        status={task.status}
+                                        priority={task.priority}
+                                        deadline={task.deadline}
+                                        duration={task.duration}
+                                        buttons={true}
+                                    />
                                 ))}
                             </div>
                         </div>

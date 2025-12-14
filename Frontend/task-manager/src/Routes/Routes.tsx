@@ -3,6 +3,8 @@ import Homepage from "../Pages/Homepage";
 import Dashboard from "../Pages/Dashboard";
 import SignIn from "../Pages/SignIn";
 import SignUp from "../Pages/SignUp";
+import ManageTasks from "../Pages/ManageTasks";
+import AiTaskAssistant from "../Pages/AiTaskAssistant";
 
 const AppRoutes = () => {
   return (
@@ -11,6 +13,8 @@ const AppRoutes = () => {
       <Route path="/dashboard" element={<Dashboard />} />
       <Route path="/login" element={<SignIn />} />
       <Route path="/signup" element={<SignUp />} />
+      <Route path="/managetasks" element={<ManageTasks />} />
+      <Route path="/aitaskassistant" element={<AiTaskAssistant />} />
     </Routes>
   )
 }

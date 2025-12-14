@@ -5,7 +5,7 @@ const SignIn = () => {
     const [showPassword, setShowPassword] = useState(false);
 
     return (
-        <div className='min-h-[calc(100vh-126px)] flex items-center justify-center'>
+        <div className='min-h-[calc(100vh-126px)] flex items-center justify-center p-6'>
             <div className='w-full max-w-md bg-[#f2e3ce] rounded-xl shadow-lg shadow-[#F0AF4F] ring-2 ring-[#edd8b9] p-8'>
                 {/* Heading */}
                 <h2 className='text-3xl font-extrabold text-gray-900 text-center mb-2'>
