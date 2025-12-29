@@ -133,7 +133,7 @@ const Dashboard = () => {
                                         priority={task.priority}
                                         deadline={task.deadline}
                                         duration={task.duration}
-                                        buttons={true}
+                                        buttons={false}
                                     />
                                 ))}
                             </div>
