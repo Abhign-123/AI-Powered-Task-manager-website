@@ -1,9 +1,21 @@
+import axios from "axios";
 import { useState } from "react";
 import { Link } from "react-router-dom";
 
 const SignIn = () => {
     const [showPassword, setShowPassword] = useState(false);
+    const [email, setEmail] = useState("");
+    const [password, setPassword] = useState("");
 
+    const login = () => {
+        axios.post('http://localhost:8080/auth/login', {
+            email, password
+        }).then((response) => {
+            console.log(response.data);
+        }).catch((error) => {
+            console.error('There was an error!', error);
+        });
+    }
     return (
         <div className='min-h-[calc(100vh-126px)] flex items-center justify-center p-6'>
             <div className='w-full max-w-md bg-[#f2e3ce] rounded-xl shadow-lg shadow-[#F0AF4F] ring-2 ring-[#edd8b9] p-8'>
@@ -16,7 +28,7 @@ const SignIn = () => {
                 </p>
 
                 {/* Form */}
-                <form className='space-y-5'>
+                <form onSubmit={login} className='space-y-5'>
                     <div>
                         <label className='block text-sm font-medium text-gray-700 mb-1'>
                             Email
@@ -24,6 +36,7 @@ const SignIn = () => {
                         <input
                             type='email'
                             placeholder='you@example.com'
+                            onChange={(e) => setEmail(e.target.value)}
                             className='w-full px-4 py-3 text-black rounded-lg border border-gray-400 focus:ring-1 focus:ring-[#d98917] focus:outline-none'
                         />
                     </div>
@@ -36,6 +49,7 @@ const SignIn = () => {
                             <input
                                 type={showPassword ? 'text' : 'password'}
                                 placeholder=''
+                                onChange={(e) => setPassword(e.target.value)}
                                 className='w-full px-4 py-3 text-black rounded-lg border border-gray-400 focus:ring-1 focus:ring-[#d98917] focus:outline-none pr-12'
                             />
                             {/* Eye icon */}

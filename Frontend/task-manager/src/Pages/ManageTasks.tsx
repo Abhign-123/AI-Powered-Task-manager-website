@@ -1,3 +1,5 @@
+import { useState } from "react";
+import AddTaskForm from "../components/AddTaskForm";
 import Filters from "../components/Filters";
 import TaskCard from "../components/TaskCard";
 
@@ -17,15 +19,25 @@ const ManageTasks = () => {
         { title: "Release v1.0", status: "Planned", priority: "High", deadline: "2023-12-20", duration: 10 },
     ];
 
+    const [click, setClick] = useState(false);
+
+    const receivedData = (data:boolean) => {
+        setClick(data);
+    }
+
     return (
         <div className="min-h-[calc(100vh-120px)] px-5">
 
             {/* Header */}
             <div className="flex justify-between items-center mb-6">
                 <h2 className="text-xl font-semibold text-black">Manage Tasks</h2>
-                <button className="px-4 py-2 bg-[#d98917] text-white rounded-md hover:bg-yellow-700">
+                <button 
+                    className="px-4 py-2 bg-[#d98917] text-white rounded-md hover:bg-yellow-700"
+                    onClick={() => setClick(!click)}
+                >
                     Add Task
                 </button>
+                {click && <AddTaskForm  updateValue={receivedData}/>}
             </div>
 
             {/* MAIN CONTENT */}
