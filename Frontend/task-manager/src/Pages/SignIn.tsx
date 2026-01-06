@@ -7,11 +7,14 @@ const SignIn = () => {
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
 
-    const login = () => {
+    const login = (e : any) => {
+        e.preventDefault();
         axios.post('http://localhost:8080/auth/login', {
             email, password
         }).then((response) => {
+            console.log('Login successful!');
             console.log(response.data);
+
         }).catch((error) => {
             console.error('There was an error!', error);
         });
