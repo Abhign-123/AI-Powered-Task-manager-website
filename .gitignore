@@ -1,61 +1,53 @@
-# -------------------------
-# Node Modules (Frontend + Backend + Root)
-# -------------------------
+# =================================================
+# NODE / FRONTEND (React, Vite, Next, etc.)
+# =================================================
 node_modules/
 Frontend/**/node_modules/
-Backend/node_modules/
-
-# -------------------------
-# Build / Output Folders
-# -------------------------
-dist/
-build/
-.temp/
-.cache/
-
-# -------------------------
-# Environment Files (Secrets)
-# -------------------------
-.env
-.env.local
-.env.development
-.env.production
-.env.test
-
-# -------------------------
-# Logs
-# -------------------------
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
 pnpm-debug.log*
 
-# -------------------------
-# System Files
-# -------------------------
+dist/
+build/
+.vite/
+.cache/
+
+*.tsbuildinfo
+
+# =================================================
+# JAVA / SPRING BOOT / BACKEND
+# =================================================
+target/
+Backend/**/target/
+*.class
+
+# =================================================
+# ENVIRONMENT FILES (SECRETS)
+# =================================================
+.env
+.env.*
+!.env.example
+
+# =================================================
+# IDE / EDITORS
+# =================================================
+.idea/
+*.iml
+*.iws
+*.ipr
+.vscode/
+*.swp
+
+# =================================================
+# OS FILES
+# =================================================
 .DS_Store
 Thumbs.db
 
-# -------------------------
-# IDE / Editor Folders
-# -------------------------
-.vscode/
-.idea/
-*.swp
-
-# -------------------------
-# Temporary Files
-# -------------------------
-*.tmp
+# =================================================
+# LOGS & TEMP
+# =================================================
 *.log
-
-# -------------------------
-# TypeScript build outputs
-# -------------------------
-*.tsbuildinfo
-
-# -------------------------
-# Vite / React Cache
-# -------------------------
-.vite/
-.vite/deps/
+*.tmp
+.temp/

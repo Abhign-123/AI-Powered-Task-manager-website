@@ -6,11 +6,11 @@ const SignUp = () => {
     const [showPassword, setShowPassword] = useState(false);
     const [error, setError] = useState("");
 
-    const handleChange = (e) => {
+    const handleChange = (e : any) => {
         setForm({ ...form, [e.target.name]: e.target.value });
     };
 
-    const handleSubmit = (e) => {
+    const handleSubmit = (e: any) => {
         e.preventDefault();
         setError("");
 
