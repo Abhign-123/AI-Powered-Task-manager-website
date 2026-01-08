@@ -1,23 +1,22 @@
-import axios from "axios";
 import { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import { useAuth } from "../auth/useAuth";
 
 const SignIn = () => {
     const [showPassword, setShowPassword] = useState(false);
+    const { login } = useAuth();
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
+    const navigate = useNavigate();
 
-    const login = (e : any) => {
+    const onSubmit = async (e : React.FormEvent) => {
         e.preventDefault();
-        axios.post('http://localhost:8080/auth/login', {
-            email, password
-        }).then((response) => {
-            console.log('Login successful!');
-            console.log(response.data);
-
-        }).catch((error) => {
-            console.error('There was an error!', error);
-        });
+        try {
+            await login(email, password);
+            navigate("/dashboard");
+        } catch (error) {
+            console.error("Login failed", error);
+        }
     }
     return (
         <div className='min-h-[calc(100vh-126px)] flex items-center justify-center p-6'>
@@ -31,7 +30,7 @@ const SignIn = () => {
                 </p>
 
                 {/* Form */}
-                <form onSubmit={login} className='space-y-5'>
+                <form onSubmit={onSubmit} className='space-y-5'>
                     <div>
                         <label className='block text-sm font-medium text-gray-700 mb-1'>
                             Email

@@ -2,6 +2,7 @@ import './App.css'
 import { BrowserRouter } from 'react-router-dom'
 import AppRoutes from './Routes/Routes'
 import Navbar from './components/Navbar'
+import { AuthProvider } from './auth/AuthProvider'
 
 function App() {
   
@@ -11,8 +12,10 @@ function App() {
       {/* <Homepage />
       <Dashboard /> */}
       <BrowserRouter>
-        <Navbar />
-        <AppRoutes />
+        <AuthProvider>
+          <Navbar />
+          <AppRoutes />
+        </AuthProvider>
       </BrowserRouter>
       {/* <AddTaskForm /> */}
 
