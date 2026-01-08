@@ -1,9 +1,10 @@
 import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
+import { useAuth } from "../auth/useAuth";
 
 const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
-  const [loggedIn, setLoggedIn] = useState(false);
+  const { isLoggedIn } = useAuth();
   const navigate = useNavigate();
 
   // Common nav menus
@@ -20,7 +21,7 @@ const Navbar = () => {
     { label: "AI Task Assistant", href: "/aitaskassistant" },
   ];
 
-  const linksToShow = loggedIn ? privateLinks : publicLinks;
+  const linksToShow = isLoggedIn ? privateLinks : publicLinks;
 
   return (
     <header className="min-h-14 mx-[3vw] my-[3vh] w-[94vw] bg-[#f2e3ce] text-black rounded-xl shadow-md px-4 sm:px-6 py-2 flex items-center justify-between">
@@ -65,10 +66,10 @@ const Navbar = () => {
       </div>
 
       {/* Right side: Login / Signup */}
-      {!loggedIn ? (
+      {!isLoggedIn ? (
         <div className="flex items-center gap-3">
           <button
-            onClick={() => {setLoggedIn(true); navigate("/login")}}
+            onClick={() => {navigate("/login")}}
             className="px-4 py-2 border-b-2 border-transparent hover:border-black hover:-translate-y-0.5 transition-all duration-300 text-[#26323a] font-semibold text-sm"
           >
             Login
@@ -82,7 +83,7 @@ const Navbar = () => {
         </div>
       ) : (
         <button
-            onClick={() => {setLoggedIn(false); navigate("/")}}
+            onClick={() => {navigate("/")}}
             className="px-4 py-2 border-b-2 border-transparent hover:border-black hover:-translate-y-0.5 transition-all duration-300 text-[#26323a] font-semibold text-sm"
           >
             Logout
