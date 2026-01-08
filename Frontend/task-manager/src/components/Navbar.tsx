@@ -4,7 +4,7 @@ import { useAuth } from "../auth/useAuth";
 
 const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
-  const { isLoggedIn } = useAuth();
+  const { isLoggedIn, logout } = useAuth();
   const navigate = useNavigate();
 
   // Common nav menus
@@ -83,7 +83,7 @@ const Navbar = () => {
         </div>
       ) : (
         <button
-            onClick={() => {navigate("/")}}
+            onClick={() => {logout(); navigate("/", {replace: true});}}
             className="px-4 py-2 border-b-2 border-transparent hover:border-black hover:-translate-y-0.5 transition-all duration-300 text-[#26323a] font-semibold text-sm"
           >
             Logout
