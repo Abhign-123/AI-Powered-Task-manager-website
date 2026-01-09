@@ -42,7 +42,7 @@ public class UserServiceImpl implements UserService {
     public LoginDto login( LoginDto loginDto) {
         Users user = userRepository.findByEmail(loginDto.getEmail());
         if(user==null){
-            return null;
+            throw new BadCredentialsException("Invalid Credentials");
         }
         if(!user.getPassword().equals(loginDto.getPassword())){
             throw new BadCredentialsException("Invalid Credentials");

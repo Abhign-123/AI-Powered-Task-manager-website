@@ -83,7 +83,7 @@ const Navbar = () => {
         </div>
       ) : (
         <button
-            onClick={() => {logout(); navigate("/", {replace: true});}}
+            onClick={() => {logout(); navigate("/login", {replace: true});}}
             className="px-4 py-2 border-b-2 border-transparent hover:border-black hover:-translate-y-0.5 transition-all duration-300 text-[#26323a] font-semibold text-sm"
           >
             Logout

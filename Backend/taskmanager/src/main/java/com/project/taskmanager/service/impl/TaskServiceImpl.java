@@ -12,6 +12,7 @@ import org.springframework.stereotype.Service;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.time.LocalDateTime;
 import java.util.List;
 @Service
 public class TaskServiceImpl implements TaskService {
@@ -36,8 +37,7 @@ public class TaskServiceImpl implements TaskService {
         task.setDescription("Add Task low");
         task.setPriority("Low");
         task.setName("Add Task");
-        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
-        task.setDueDate(sdf.parse("2026-01-07"));
+        task.setDueDate(LocalDateTime.now());
         task.setStatus("Open");
         Users user = userRepository.findById(1L)
                 .orElseThrow(() -> new RuntimeException("User not found"));

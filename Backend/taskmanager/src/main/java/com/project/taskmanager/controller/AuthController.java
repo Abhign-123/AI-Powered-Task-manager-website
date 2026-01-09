@@ -14,7 +14,7 @@ import java.text.ParseException;
 import java.util.List;
 
 @RestController
-@CrossOrigin(origins = "http://localhost:5174")
+@CrossOrigin(origins = "http://localhost:5173")
 @RequestMapping("/auth")
 public class AuthController {
 
@@ -29,8 +29,8 @@ public class AuthController {
     }
 
     @PostMapping("/login")
-    public LoginDto addloginDetails(@RequestBody LoginDto loginDto)
+    public ResponseEntity<LoginDto> addloginDetails(@RequestBody LoginDto loginDto)
     {
-        return userService.login(loginDto);
+        return ResponseEntity.ok(userService.login(loginDto));
     }
 }

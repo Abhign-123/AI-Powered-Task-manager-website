@@ -2,6 +2,7 @@ package com.project.taskmanager.entity;
 
 import jakarta.persistence.*;
 
+import java.time.LocalDateTime;
 import java.util.Date;
 
 @Entity
@@ -22,7 +23,9 @@ public class Tasks {
     @Column
     private String priority;
     @Column
-    private Date dueDate;
+    private LocalDateTime creationDate;
+    @Column
+    private LocalDateTime dueDate;
     @JoinColumn(name = "user_id")
     @ManyToOne
     private Users userId;
@@ -43,11 +46,19 @@ public class Tasks {
         this.userId = userId;
     }
 
-    public Date getDueDate() {
+    public LocalDateTime getCreationDate() {
+        return creationDate;
+    }
+
+    public void setCreationDate(LocalDateTime creationDate) {
+        this.creationDate = creationDate;
+    }
+
+    public LocalDateTime getDueDate() {
         return dueDate;
     }
 
-    public void setDueDate(Date dueDate) {
+    public void setDueDate(LocalDateTime dueDate) {
         this.dueDate = dueDate;
     }
 

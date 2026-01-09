@@ -1,21 +1,31 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { useAuth } from "../auth/useAuth";
 
 const SignIn = () => {
     const [showPassword, setShowPassword] = useState(false);
-    const { login } = useAuth();
+    const { login, isLoggedIn } = useAuth();
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
+    const [error, setError] = useState<string | null>(null);
     const navigate = useNavigate();
+
+    useEffect(() => {
+        if (isLoggedIn) {
+            navigate("/dashboard");
+        }
+    }, [isLoggedIn, navigate]);
 
     const onSubmit = async (e : React.FormEvent) => {
         e.preventDefault();
         try {
-            await login(email, password);
+            const response=await login(email, password);
+            console.log("Login response:", response);
             navigate("/dashboard");
-        } catch (error) {
-            console.error("Login failed", error);
+            
+        } catch (error: any) {
+            setError(error?.message);
+            console.log("Login failed", error);
         }
     }
     return (
@@ -28,7 +38,12 @@ const SignIn = () => {
                 <p className='text-gray-500 text-center mb-8'>
                     Login to continue your journey
                 </p>
-
+                {/* Error Message */}
+                {error && (
+                    <div className='mb-4 p-3 bg-red-100 text-red-700 border border-red-400 rounded'>
+                        {error}
+                    </div>
+                )}
                 {/* Form */}
                 <form onSubmit={onSubmit} className='space-y-5'>
                     <div>
@@ -40,6 +55,7 @@ const SignIn = () => {
                             placeholder='you@example.com'
                             onChange={(e) => setEmail(e.target.value)}
                             className='w-full px-4 py-3 text-black rounded-lg border border-gray-400 focus:ring-1 focus:ring-[#d98917] focus:outline-none'
+                            required
                         />
                     </div>
 
@@ -53,6 +69,7 @@ const SignIn = () => {
                                 placeholder=''
                                 onChange={(e) => setPassword(e.target.value)}
                                 className='w-full px-4 py-3 text-black rounded-lg border border-gray-400 focus:ring-1 focus:ring-[#d98917] focus:outline-none pr-12'
+                                required
                             />
                             {/* Eye icon */}
                             <button
