@@ -23,6 +23,7 @@ public class TaskController {
 
     @PostMapping("/addTask")
     public ResponseEntity<String> addTask() throws ParseException {
+        System.out.println("DEBUG: PostMapping /addTask was reached!");
         task.addTask();
         return ResponseEntity.ok("Task added successfully");
     }

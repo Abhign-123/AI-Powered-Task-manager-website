@@ -31,6 +31,7 @@ public class UserServiceImpl implements UserService {
     @Override
     public void register(RegisterDto registerDto) {
         Users user = new Users();
+        user.setFullName(registerDto.getFullName());
         user.setEmail(registerDto.getEmail());
         user.setPassword(registerDto.getPassword());
         user.setRole(registerDto.getRole());

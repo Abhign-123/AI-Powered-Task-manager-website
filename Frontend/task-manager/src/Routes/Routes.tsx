@@ -9,7 +9,7 @@ import AiTaskAssistant from "../Pages/AiTaskAssistant";
 
 const ProtectedRoute = ({ element }: { element: React.ReactNode }) => {
   const { isLoggedIn } = useAuth();
-  return isLoggedIn ? element : <Navigate to="/login" replace />;
+  return isLoggedIn ? element : <Navigate to="/" replace />;
 };
 
 const AppRoutes = () => {
