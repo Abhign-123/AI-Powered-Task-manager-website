@@ -8,6 +8,7 @@ interface TaskCardProps {
 };
 
 const TaskCard = ({ title, status, priority, deadline, duration, buttons } : TaskCardProps) => {
+    const percentageCompleted = 50;
     return (
         <div className="bg-[#e7d4b8] p-5 rounded-xl shadow-sm hover:shadow-xl transition duration-300">
             <h3 className="font-semibold text-lg text-gray-600">{title}</h3>
@@ -27,6 +28,13 @@ const TaskCard = ({ title, status, priority, deadline, duration, buttons } : Tas
             <p className="text-sm text-gray-600 mb-4">
                 <strong>Duration:</strong> {duration} days
             </p>
+
+            <div className="w-full bg-white rounded-full h-2">
+                <div
+                    className="h-2 rounded-full transition-all"
+                    style={{ width: `${percentageCompleted}%`, backgroundColor: "#d98917" }}
+                />
+            </div>
 
             {buttons && (
                 <div className="flex gap-3">
