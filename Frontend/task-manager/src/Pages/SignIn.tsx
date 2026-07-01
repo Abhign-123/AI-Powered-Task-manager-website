@@ -21,7 +21,7 @@ const SignIn = () => {
         try {
             const response=await login(email, password);
             console.log("Login response:", response);
-            navigate("/dashboard");
+            navigate("/dashboard", { replace: true });
             
         } catch (error: any) {
             setError(error?.message);

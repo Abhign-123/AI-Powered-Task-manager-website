@@ -37,7 +37,7 @@ const TaskCard = ({ title, status, priority, deadline, duration, buttons } : Tas
             </div>
 
             {buttons && (
-                <div className="flex gap-3">
+                <div className="flex justify-center pt-4 gap-3">
                     <button className="px-4 py-1 bg-[#d98917] text-white rounded-md text-sm hover:bg-yellow-600">
                         Edit
                     </button>

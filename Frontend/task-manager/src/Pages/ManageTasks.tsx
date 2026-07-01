@@ -26,7 +26,7 @@ const ManageTasks = () => {
     }
 
     return (
-        <div className="min-h-[calc(100vh-120px)] px-5">
+        <div className="min-h-[calc(100vh-120px)] mx-[2vw] px-5">
 
             {/* Header */}
             <div className="flex justify-between items-center mb-6">

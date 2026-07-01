@@ -2,7 +2,7 @@
 
 const Card = () => {
   return (
-    <div className="w-full flex flex-col md:flex-row items-center justify-center gap-6 md:gap-10 px-4 py-10">
+    <div className="w-full flex flex-col md:flex-row items-center justify-evenly gap-6 md:gap-10 px-4 py-10">
 
             {/* Card 1 */}
             <div className="bg-[#e1caa9] transition-transform duration-300 hover:scale-120

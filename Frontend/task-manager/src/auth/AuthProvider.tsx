@@ -1,6 +1,7 @@
 import axios from "axios";
 import { useState, useEffect } from "react";
 import { AuthContext } from "./AuthContext";
+import { useNavigate } from "react-router-dom";
 
 export function AuthProvider({ children } : { children: React.ReactNode }) {
 
@@ -8,6 +9,8 @@ export function AuthProvider({ children } : { children: React.ReactNode }) {
         const saved = sessionStorage.getItem('isLoggedIn');
         return saved ? JSON.parse(saved) : false;
     });
+
+    const navigate = useNavigate();
 
     useEffect(() => {
         sessionStorage.setItem('isLoggedIn', JSON.stringify(isLoggedIn));
@@ -31,6 +34,7 @@ export function AuthProvider({ children } : { children: React.ReactNode }) {
 
     const logout = () => {
         setIsLoggedIn(false);
+        navigate('/', { replace: true });
     }
 
     return (
