@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { Link } from "react-router-dom";
+import axios from "axios";
 
 const SignUp = () => {
     const [form, setForm] = useState({ fullName: "", email: "", password: "", confirm: "" });
@@ -10,9 +11,13 @@ const SignUp = () => {
         setForm({ ...form, [e.target.name]: e.target.value });
     };
 
-    const handleSubmit = (e: any) => {
+
+
+    const  handleSubmit = (e: any) => {
         e.preventDefault();
         setError("");
+
+        
 
         if (!form.fullName || !form.email || !form.password || !form.confirm) {
             setError("All fields are required.");
@@ -26,6 +31,23 @@ const SignUp = () => {
 
         console.log("Submitted:", form);
         setForm({ fullName: "", email: "", password: "", confirm: "" });
+
+        const response = async ()=>{
+            try{
+                await axios.post('http://localhost:8080/auth/register', {
+                    fullName: form.fullName,
+                    email: form.email,
+                    password: form.password
+                });
+                console.log('Registration successful');
+            }
+            catch(error){
+                setError("Registration failed. Please try again.");
+                console.error('There was an error!', error);
+            }
+        }
+        response();
+
     };
 
     return (

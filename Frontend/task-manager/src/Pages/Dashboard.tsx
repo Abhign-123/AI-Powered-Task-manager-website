@@ -1,11 +1,21 @@
-import React from 'react';
+import React, { useState } from 'react';
 import AddTaskForm from '../components/AddTaskForm.tsx';
 import DoughnutChart from '../Charts/TaskStatsChart.tsx';
 import Filters from '../components/Filters.tsx';
 import TaskCard from '../components/TaskCard.tsx';
 import { useNavigate } from 'react-router-dom';
+import { useEffect } from 'react';
+import axios from 'axios';
 
-
+interface Task {
+    id: number;
+    taskName: string;
+    description: string;
+    status: string;
+    priority: string;
+    startDate: string;
+    endDate: string;
+}
 // Tailwind color mapping based on the screenshot:
 // Main background: #f8f5ee
 // Card/Section background: #f2e3ce
@@ -13,6 +23,10 @@ import { useNavigate } from 'react-router-dom';
 // Task Card color: #e7d4b8 (slightly darker than card background)
 
 const Dashboard = () => {
+    const [click, setClick] = React.useState(false)
+    const navigate = useNavigate();
+    const [tasks, setTasks] = useState([]);
+
     // Dummy data for rendering the task cards
     const completedTasks = 18;
     const pendingTasks = 6;
@@ -20,22 +34,24 @@ const Dashboard = () => {
     const totalTasks = completedTasks + pendingTasks + inProgressTasks;
     //const percentageCompleted = (completedTasks / totalTasks) * 100;
 
-    const tasks = [
-        { title: "Design Homepage", status: "Completed", priority: "High", deadline: "2023-11-15", duration: 5 },
-        { title: "Develop API", status: "Completed", priority: "Medium", deadline: "2023-11-20", duration: 7 },
-        { title: "Write Documentation", status: "Pending", priority: "Low", deadline: "2023-11-25", duration: 3 },
-        { title: "Create Wireframes", status: "In Progress", priority: "High", deadline: "2023-12-01", duration: 4 },
-        { title: "Fix Bug #234", status: "In Progress", priority: "High", deadline: "2023-11-30", duration: 2 },
-        { title: "Deploy to Staging", status: "Completed", priority: "Medium", deadline: "2023-12-02", duration: 1 },
-        { title: "User Testing", status: "Pending", priority: "Medium", deadline: "2023-12-05", duration: 6 },
-        { title: "Implement Auth", status: "In Progress", priority: "High", deadline: "2023-12-10", duration: 8 },
-        { title: "Performance Audit", status: "Pending", priority: "Low", deadline: "2023-12-12", duration: 3 },
-        { title: "Release v1.0", status: "Planned", priority: "High", deadline: "2023-12-20", duration: 10 },
-    ];
+    useEffect(() => {
+        // Fetch tasks from the backend API
+       const fetchTasks = async () => {
+            try {
+                const response = await axios.get('http://localhost:8080/users/userTasks/1');
+                console.log(response); // Replace with your API endpoint
+                const data = response.data;
+                console.log('Fetched tasks:', data);
+                setTasks(data);
+            } catch (error) {
+                console.error('Error fetching tasks:', error);
+            }
+        };
+        fetchTasks();
+
+    },[]);
     
     
-    const [click, setClick] = React.useState(false)
-    const navigate = useNavigate();
     const Taskform= ()=>{
         setClick(true)
         console.log("clicked", click)    
@@ -125,17 +141,15 @@ const Dashboard = () => {
                         {/* flex-grow and overflow-y-auto ensure only this section scrolls */}
                         <div className="grow overflow-y-auto pr-2 custom-scrollbar"> 
                             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
-                                {tasks.map((task, index) => (
+                                {/* {tasks.map((task) => (
                                     <TaskCard
-                                        key={index}
-                                        title={task.title}
+                                        buttons={false}
+                                        key={task.id}
+                                        title={task.taskName}
                                         status={task.status}
                                         priority={task.priority}
-                                        deadline={task.deadline}
-                                        duration={task.duration}
-                                        buttons={false}
                                     />
-                                ))}
+                                ))} */}
                             </div>
                         </div>
                     </div>
