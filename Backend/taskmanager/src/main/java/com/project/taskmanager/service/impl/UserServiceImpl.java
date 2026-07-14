@@ -36,7 +36,7 @@ public class UserServiceImpl implements UserService {
         user.setPassword(registerDto.getPassword());
         user.setRole(registerDto.getRole());
 
-        userRepository.save(user);
+         userRepository.save(user);
     }
 
     @Override

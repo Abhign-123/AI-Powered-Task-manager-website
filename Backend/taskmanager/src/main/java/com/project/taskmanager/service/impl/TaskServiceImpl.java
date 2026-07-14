@@ -1,5 +1,6 @@
 package com.project.taskmanager.service.impl;
 
+import com.project.taskmanager.dto.TaskDto;
 import com.project.taskmanager.entity.Tasks;
 import com.project.taskmanager.entity.Users;
 import com.project.taskmanager.repository.TaskRepository;
@@ -21,14 +22,29 @@ public class TaskServiceImpl implements TaskService {
     @Autowired
     private UserRepository userRepository;
 
+    private TaskDto mapToDto(Tasks tasks){
+        TaskDto dto = new TaskDto();
+        dto.setId(tasks.getId());
+        dto.setTaskName(tasks.getName());
+        dto.setPriority(tasks.getPriority());
+        dto.setStatus(tasks.getStatus());
+        dto.setDescription(tasks.getDescription());
+        dto.setStartDate(tasks.getCreationDate().toString());
+        dto.setEndDate(tasks.getDueDate().toString());
+
+        return dto;
+    }
+
     @Override
     public List<Tasks> getAllTasks(long id) {
         return taskRepository.findAll();
     }
 
     @Override
-    public List<Tasks> getTasksByUserId(long userId) {
-        return taskRepository.findTaskByUserId(userId);
+    public List<TaskDto> getTasksByUserId(long userId) {
+
+        List<Tasks> tasks = taskRepository.findTaskByUserId(userId);
+        return tasks.stream().map(this::mapToDto).toList();
     }
     @Transactional
     @Override

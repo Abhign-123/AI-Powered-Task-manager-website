@@ -25,7 +25,8 @@ public class AuthController {
     @PostMapping("/register")
     public void addregisterDetails(@RequestBody RegisterDto registerDto)
     {
-        userService.register(registerDto);
+       userService.register(registerDto);
+        //return  ResponseEntity.ok().body(registerDto);
     }
 
     @PostMapping("/login")

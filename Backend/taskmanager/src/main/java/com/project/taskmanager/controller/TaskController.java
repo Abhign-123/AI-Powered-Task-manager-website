@@ -1,5 +1,6 @@
 package com.project.taskmanager.controller;
 
+import com.project.taskmanager.dto.TaskDto;
 import com.project.taskmanager.entity.Tasks;
 import com.project.taskmanager.service.TaskService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,7 +18,7 @@ public class TaskController {
     private TaskService task;
 
     @GetMapping("/userTasks/{userId}")
-    public ResponseEntity<List<Tasks>> getUserTasks(@PathVariable long userId){
+    public ResponseEntity<List<TaskDto>> getUserTasks(@PathVariable long userId){
         return new ResponseEntity<>(task.getTasksByUserId(userId), HttpStatus.OK);
     }
 

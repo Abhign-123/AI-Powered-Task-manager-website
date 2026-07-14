@@ -15,7 +15,7 @@ public class Tasks {
     @Column
     private long id;
     @Column
-    private String name;
+    private String taskName;
     @Column
     private String description;
     @Column
@@ -87,11 +87,11 @@ public class Tasks {
     }
 
     public String getName() {
-        return name;
+        return taskName;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setName(String taskName) {
+        this.taskName = taskName;
     }
 
 
