@@ -141,15 +141,17 @@ const Dashboard = () => {
                         {/* flex-grow and overflow-y-auto ensure only this section scrolls */}
                         <div className="grow overflow-y-auto pr-2 custom-scrollbar"> 
                             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
-                                {/* {tasks.map((task) => (
+                                {tasks.map((task : Task) => (
                                     <TaskCard
                                         buttons={false}
                                         key={task.id}
                                         title={task.taskName}
                                         status={task.status}
                                         priority={task.priority}
+                                        deadline={task.endDate}
+                                        duration={Math.ceil((new Date(task.endDate).getTime() - new Date(task.startDate).getTime()) / (1000 * 3600 * 24))}
                                     />
-                                ))} */}
+                                ))}
                             </div>
                         </div>
                     </div>
