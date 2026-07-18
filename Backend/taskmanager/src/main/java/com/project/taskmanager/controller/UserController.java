@@ -14,19 +14,19 @@ import java.util.Optional;
 @RequestMapping("/users")
 public class UserController {
     @Autowired
-    private UserService user;
+    UserService userService;
 
 
     @GetMapping
     public List<Users> aLlUsers(){
 
-         return user.getAllUsers();
+         return userService.getAllUsers();
 
     }
     @GetMapping("/{id}")
     public ResponseEntity<Optional<Users>> getUserbyId(@PathVariable long id){
 
-        return new ResponseEntity<>(user.getUserById(id), HttpStatus.OK);
+        return new ResponseEntity<>(userService.getUserById(id), HttpStatus.OK);
 
     }
 

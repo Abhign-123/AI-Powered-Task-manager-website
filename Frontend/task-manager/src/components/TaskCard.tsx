@@ -21,7 +21,7 @@ const TaskCard = ({ task, children }:{ task: Task, children?: React.ReactNode })
             </p>
 
             <p className="text-sm text-gray-600 mb-4">
-                <strong>Duration:</strong> {10} days
+                <strong>Duration:</strong> {Math.ceil((new Date(task.endDate).getTime() - new Date(task.startDate).getTime()) / (1000 * 3600 * 24))} days
             </p>
 
             <div className="w-full bg-white rounded-full h-2">

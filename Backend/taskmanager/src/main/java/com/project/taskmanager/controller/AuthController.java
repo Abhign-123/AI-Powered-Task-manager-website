@@ -3,6 +3,7 @@ package com.project.taskmanager.controller;
 import com.project.taskmanager.dto.LoginDto;
 import com.project.taskmanager.dto.RegisterDto;
 import com.project.taskmanager.entity.Users;
+import com.project.taskmanager.service.AuthService;
 import com.project.taskmanager.service.TaskService;
 import com.project.taskmanager.service.UserService;
 import org.apache.catalina.User;
@@ -20,18 +21,18 @@ public class AuthController {
 
 
     @Autowired
-    private UserService userService;
+    private AuthService authService;
 
     @PostMapping("/register")
     public void addregisterDetails(@RequestBody RegisterDto registerDto)
     {
-       userService.register(registerDto);
+       authService.register(registerDto);
         //return  ResponseEntity.ok().body(registerDto);
     }
 
     @PostMapping("/login")
     public ResponseEntity<LoginDto> addloginDetails(@RequestBody LoginDto loginDto)
     {
-        return ResponseEntity.ok(userService.login(loginDto));
+        return ResponseEntity.ok(authService.login(loginDto));
     }
 }
