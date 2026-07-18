@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import { useAuth } from "../auth/useAuth";
+import { useAuth } from "../hooks/useAuth";
 
 const SignIn = () => {
     const [showPassword, setShowPassword] = useState(false);
@@ -23,8 +23,8 @@ const SignIn = () => {
             console.log("Login response:", response);
             navigate("/dashboard", { replace: true });
             
-        } catch (error: any) {
-            setError(error?.message);
+        } catch (error: unknown) {
+            setError((error as Error).message);
             console.log("Login failed", error);
         }
     }

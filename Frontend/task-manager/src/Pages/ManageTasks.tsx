@@ -1,29 +1,30 @@
 import { useState } from "react";
-import AddTaskForm from "../components/AddTaskForm";
+import TaskForm from "../components/TaskForm";
 import Filters from "../components/Filters";
 import TaskCard from "../components/TaskCard";
+import { useTasks } from "../hooks/useTasks";
+import type { Task } from "../types/Task";
 
 const ManageTasks = () => {
 
+    const { tasks } = useTasks();
+    const [isTaskFormOpen, setIsTaskFormOpen] = useState(false);
+    const [taskToEdit, setTaskToEdit] = useState<Task | null>(null);
 
-    const tasks = [
-        { title: "Design Homepage", status: "Completed", priority: "High", deadline: "2023-11-15", duration: 5 },
-        { title: "Develop API", status: "Completed", priority: "Medium", deadline: "2023-11-20", duration: 7 },
-        { title: "Write Documentation", status: "Pending", priority: "Low", deadline: "2023-11-25", duration: 3 },
-        { title: "Create Wireframes", status: "In Progress", priority: "High", deadline: "2023-12-01", duration: 4 },
-        { title: "Fix Bug #234", status: "In Progress", priority: "High", deadline: "2023-11-30", duration: 2 },
-        { title: "Deploy to Staging", status: "Completed", priority: "Medium", deadline: "2023-12-02", duration: 1 },
-        { title: "User Testing", status: "Pending", priority: "Medium", deadline: "2023-12-05", duration: 6 },
-        { title: "Implement Auth", status: "In Progress", priority: "High", deadline: "2023-12-10", duration: 8 },
-        { title: "Performance Audit", status: "Pending", priority: "Low", deadline: "2023-12-12", duration: 3 },
-        { title: "Release v1.0", status: "Planned", priority: "High", deadline: "2023-12-20", duration: 10 },
-    ];
+    const handleOpenCreate = () => {
+        setTaskToEdit(null);
+        setIsTaskFormOpen(true);
+    };
 
-    const [click, setClick] = useState(false);
+    const handleOpenEdit = (task: Task) => {
+        setTaskToEdit(task);
+        setIsTaskFormOpen(true);
+    };
 
-    const receivedData = (data:boolean) => {
-        setClick(data);
-    }
+    const handleCloseForm = () => {
+        setTaskToEdit(null);
+        setIsTaskFormOpen(false);
+    };
 
     return (
         <div className="min-h-[calc(100vh-120px)] mx-[2vw] px-5">
@@ -33,12 +34,13 @@ const ManageTasks = () => {
                 <h2 className="text-xl font-semibold text-black">Manage Tasks</h2>
                 <button 
                     className="px-4 py-2 bg-[#d98917] text-white rounded-md hover:bg-yellow-700"
-                    onClick={() => setClick(!click)}
+                    onClick={() => handleOpenCreate()}
                 >
                     Add Task
                 </button>
-                {click && <AddTaskForm  updateValue={receivedData}/>}
             </div>
+
+            <TaskForm isOpen={isTaskFormOpen} onClose={handleCloseForm} task={taskToEdit} key={taskToEdit?.id || "new-task-form"}/>
 
             {/* MAIN CONTENT */}
             <div className="flex flex-col md:flex-row gap-8 h-[75vh]">
@@ -51,16 +53,23 @@ const ManageTasks = () => {
                 {/* TASK CARDS */}
                 <div className="flex-1 bg-[#f2e3ce] h-full p-6 rounded-xl shadow-md">
                     <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 p-2 h-full custom-scrollbar overflow-y-auto">
-                        {tasks.map((task, index) => (
+                        {tasks.map((task) => (
                             <TaskCard
-                                key={index}
-                                title={task.title}
-                                status={task.status}
-                                priority={task.priority}
-                                deadline={task.deadline}
-                                duration={task.duration}
-                                buttons={true}
-                            />
+                                key={task.id}
+                                task={task}
+                            >
+                                <div className="flex justify-center pt-4 gap-3">
+                                    <button
+                                        className="px-4 py-1 bg-[#d98917] text-white rounded-md text-sm hover:bg-yellow-600"
+                                        onClick={() => handleOpenEdit(task)}
+                                    >
+                                        Edit
+                                    </button>
+                                    <button className="px-4 py-1 bg-red-500 text-white rounded-md text-sm hover:bg-red-600">
+                                        Delete
+                                    </button>
+                                </div>
+                            </TaskCard>
                         ))}
                     </div>
                 </div>

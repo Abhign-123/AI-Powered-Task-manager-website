@@ -1,23 +1,21 @@
-import { useState } from "react";
+import { useState, type ChangeEvent, type FormEvent } from "react";
 import { Link } from "react-router-dom";
-import axios from "axios";
+import * as authService from "../services/authService";
 
 const SignUp = () => {
     const [form, setForm] = useState({ fullName: "", email: "", password: "", confirm: "" });
     const [showPassword, setShowPassword] = useState(false);
     const [error, setError] = useState("");
 
-    const handleChange = (e : any) => {
+    const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
         setForm({ ...form, [e.target.name]: e.target.value });
     };
 
 
-
-    const  handleSubmit = (e: any) => {
+    const handleSubmit = (e: FormEvent) => {
         e.preventDefault();
         setError("");
 
-        
 
         if (!form.fullName || !form.email || !form.password || !form.confirm) {
             setError("All fields are required.");
@@ -32,21 +30,14 @@ const SignUp = () => {
         console.log("Submitted:", form);
         setForm({ fullName: "", email: "", password: "", confirm: "" });
 
-        const response = async ()=>{
-            try{
-                await axios.post('http://localhost:8080/auth/register', {
-                    fullName: form.fullName,
-                    email: form.email,
-                    password: form.password
-                });
-                console.log('Registration successful');
-            }
-            catch(error){
-                setError("Registration failed. Please try again.");
-                console.error('There was an error!', error);
-            }
+        try {
+            authService.register(form.fullName, form.email, form.password);
+            console.log('Registration successful');
         }
-        response();
+        catch (error) {
+            setError("Registration failed. Please try again.");
+            console.error('There was an error!', error);
+        }
 
     };
 
@@ -99,8 +90,8 @@ const SignUp = () => {
                                 type="button"
                                 onClick={() => setShowPassword(!showPassword)}
                                 className={`absolute inset-y-0 right-3 flex items-center ${showPassword
-                                        ? 'text-[#d98917]'
-                                        : 'text-gray-400 hover:text-[#d98917]'
+                                    ? 'text-[#d98917]'
+                                    : 'text-gray-400 hover:text-[#d98917]'
                                     }`}
                             >
                                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor" className="w-5 h-5">
@@ -132,7 +123,7 @@ const SignUp = () => {
                 </form>
 
                 <p className="text-center text-sm text-gray-700 mt-5">
-                    Already have an account? 
+                    Already have an account?
                     <Link to="/login" className="text-[#d98917] font-semibold hover:underline">Sign In</Link>
                 </p>
             </div>

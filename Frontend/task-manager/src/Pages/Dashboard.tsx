@@ -1,65 +1,23 @@
-import React, { useState } from 'react';
-import AddTaskForm from '../components/AddTaskForm.tsx';
+import { useState } from 'react';
+import TaskForm from '../components/TaskForm.tsx';
 import DoughnutChart from '../Charts/TaskStatsChart.tsx';
 import Filters from '../components/Filters.tsx';
 import TaskCard from '../components/TaskCard.tsx';
 import { useNavigate } from 'react-router-dom';
-import { useEffect } from 'react';
-import axios from 'axios';
-
-interface Task {
-    id: number;
-    taskName: string;
-    description: string;
-    status: string;
-    priority: string;
-    startDate: string;
-    endDate: string;
-}
-// Tailwind color mapping based on the screenshot:
-// Main background: #f8f5ee
-// Card/Section background: #f2e3ce
-// Primary button color: #e09440
-// Task Card color: #e7d4b8 (slightly darker than card background)
+import type { Task } from '../types/Task.ts';
+import { useTasks } from '../hooks/useTasks.ts';
 
 const Dashboard = () => {
-    const [click, setClick] = React.useState(false)
     const navigate = useNavigate();
-    const [tasks, setTasks] = useState([]);
+    const { tasks } = useTasks();
+    const [isTaskFormOpen, setIsTaskFormOpen] = useState(false);
 
     // Dummy data for rendering the task cards
     const completedTasks = 18;
     const pendingTasks = 6;
     const inProgressTasks = 4;
     const totalTasks = completedTasks + pendingTasks + inProgressTasks;
-    //const percentageCompleted = (completedTasks / totalTasks) * 100;
-
-    useEffect(() => {
-        // Fetch tasks from the backend API
-       const fetchTasks = async () => {
-            try {
-                const response = await axios.get('http://localhost:8080/users/userTasks/1');
-                console.log(response); // Replace with your API endpoint
-                const data = response.data;
-                console.log('Fetched tasks:', data);
-                setTasks(data);
-            } catch (error) {
-                console.error('Error fetching tasks:', error);
-            }
-        };
-        fetchTasks();
-
-    },[]);
-    
-    
-    const Taskform= ()=>{
-        setClick(true)
-        console.log("clicked", click)    
-    }
-
-    const receivedData = (data:boolean) => {
-        setClick(data);
-    }
+    //const percentageCompleted = (completedTasks / totalTasks) * 100;    
     
     return (
         // The main page body. Min-h-screen ensures the page structure is visible.
@@ -76,12 +34,13 @@ const Dashboard = () => {
                     </h1>
                     <div className="flex flex-wrap gap-3">
                         <button 
-                            onClick={Taskform }
+                            onClick={() => setIsTaskFormOpen(true)}
                         
                             className="bg-[#d98917] px-5 py-2.5 text-sm font-semibold text-white border  rounded-md hover:opacity-80 transition duration-300">
                             Add New Task
                         </button>
-                        {click && <AddTaskForm  updateValue={receivedData}/>}
+                        
+                        <TaskForm isOpen={isTaskFormOpen} onClose={() => setIsTaskFormOpen(false)}/>
                         {/* Note: In the screenshot, the button text is "Go To Task Management" and it is orange. */}
                         <button 
                             onClick={() => navigate('/managetasks')}
@@ -141,15 +100,12 @@ const Dashboard = () => {
                         {/* flex-grow and overflow-y-auto ensure only this section scrolls */}
                         <div className="grow overflow-y-auto pr-2 custom-scrollbar"> 
                             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
-                                {/* {tasks.map((task) => (
+                                {tasks.map((task: Task) => (
                                     <TaskCard
-                                        buttons={false}
                                         key={task.id}
-                                        title={task.taskName}
-                                        status={task.status}
-                                        priority={task.priority}
+                                        task={task}
                                     />
-                                ))} */}
+                                ))}
                             </div>
                         </div>
                     </div>

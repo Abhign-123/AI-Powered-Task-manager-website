@@ -1,9 +1,16 @@
-import axios from "axios";
-import { useState, useEffect } from "react";
-import { AuthContext } from "./AuthContext";
+import { createContext, useEffect, useState, type ReactNode } from "react";
 import { useNavigate } from "react-router-dom";
+import { loginApi } from "../api/authApi";
 
-export function AuthProvider({ children } : { children: React.ReactNode }) {
+interface AuthContextType {
+    isLoggedIn: boolean;
+    login: (email: string, password: string) => Promise<void>;
+    logout: () => void;
+}
+
+const AuthContext = createContext<AuthContextType | null>(null);
+
+export function AuthProvider({ children } : { children: ReactNode }) {
 
     const [isLoggedIn, setIsLoggedIn] = useState(() => {
         const saved = sessionStorage.getItem('isLoggedIn');
@@ -18,16 +25,10 @@ export function AuthProvider({ children } : { children: React.ReactNode }) {
 
     const login = async (email: string, password: string) => {
         try {
-            const response=await axios.post('http://localhost:8080/auth/login', {
-                email,
-                password
-            });
-            console.log('Login successful', response);
+            await loginApi({email, password});
             setIsLoggedIn(true);
-            return response.data;
         } catch (error) {
             setIsLoggedIn(false);
-            console.error('There was an error!', error);
             throw error;
         }
     };
@@ -44,6 +45,10 @@ export function AuthProvider({ children } : { children: React.ReactNode }) {
                 login,
                 logout
             }}
-        >{children}</AuthContext.Provider>
+        >
+            {children}
+        </AuthContext.Provider>
     );
-}
+};
+
+export { AuthContext };
