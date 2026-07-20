@@ -10,6 +10,16 @@ const ManageTasks = () => {
     const { tasks } = useTasks();
     const [isTaskFormOpen, setIsTaskFormOpen] = useState(false);
     const [taskToEdit, setTaskToEdit] = useState<Task | null>(null);
+    const [filters, setFilters] = useState({ status: "", priority: [] as string[] });
+
+    console.log("ManageTasks ", filters);
+
+    const filteredTasks = tasks.filter((task) => {
+        const matchedPriority = filters.priority.length === 0 || filters.priority.includes(task.priority);
+        const matchedStatus = filters.status === "" || filters.status.includes(task.status);
+
+        return matchedPriority && matchedStatus;
+    });
 
     const handleOpenCreate = () => {
         setTaskToEdit(null);
@@ -47,13 +57,13 @@ const ManageTasks = () => {
 
                 {/* FILTERS — top on small screens, left on large screens */}
                 <div className="w-full md:w-64">
-                    <Filters page="managetasks" />
+                    <Filters page="managetasks" onFilterChange={setFilters} />
                 </div>
 
                 {/* TASK CARDS */}
                 <div className="flex-1 bg-[#f2e3ce] h-full p-6 rounded-xl shadow-md">
                     <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 p-2 h-full custom-scrollbar overflow-y-auto">
-                        {tasks.map((task) => (
+                        {filteredTasks.map((task) => (
                             <TaskCard
                                 key={task.id}
                                 task={task}

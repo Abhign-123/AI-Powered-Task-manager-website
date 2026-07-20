@@ -1,6 +1,6 @@
 import { createContext, useEffect, useState, type ReactNode } from "react";
 import { useNavigate } from "react-router-dom";
-import { loginApi } from "../api/authApi";
+import { authApi } from "../api/authApi";
 
 interface AuthContextType {
     isLoggedIn: boolean;
@@ -25,7 +25,7 @@ export function AuthProvider({ children } : { children: ReactNode }) {
 
     const login = async (email: string, password: string) => {
         try {
-            await loginApi({email, password});
+            await authApi.login({email, password});
             setIsLoggedIn(true);
         } catch (error) {
             setIsLoggedIn(false);

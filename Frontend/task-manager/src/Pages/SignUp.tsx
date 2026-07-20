@@ -12,7 +12,7 @@ const SignUp = () => {
     };
 
 
-    const handleSubmit = (e: FormEvent) => {
+    const handleSubmit = async (e: FormEvent) => {
         e.preventDefault();
         setError("");
 
@@ -27,18 +27,14 @@ const SignUp = () => {
             return;
         }
 
-        console.log("Submitted:", form);
-        setForm({ fullName: "", email: "", password: "", confirm: "" });
-
         try {
-            authService.register(form.fullName, form.email, form.password);
-            console.log('Registration successful');
+            await authService.register(form.fullName, form.email, form.password);
+            setForm({ fullName: "", email: "", password: "", confirm: "" });
         }
         catch (error) {
             setError("Registration failed. Please try again.");
             console.error('There was an error!', error);
         }
-
     };
 
     return (
