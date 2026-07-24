@@ -17,8 +17,8 @@ export const TaskProvider = ({ children } : { children: ReactNode }) => {
     useEffect(() => {
         const getTasks = async () => {
             try {
-                const data = await tasksApi.getTasksByUserId(10).then(response => response.data);
-                setTasks(data);
+                const response = await tasksApi.getTasksByUser();
+                setTasks(response.data);
             } catch (error) {
                 setError((error as Error).message || "Failed to get Tasks");
             }

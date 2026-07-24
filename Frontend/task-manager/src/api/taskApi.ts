@@ -5,9 +5,9 @@ import type { Task } from "../types/Task"
 
 export const tasksApi = {
 
-    getTasksByUserId: (userId : number) =>
+    getTasksByUser: () =>
         
-        apiClient.get(`/users/userTasks/${userId}`),
+        apiClient.get("/users/userTasks"),
 
     addTask:(taskData: Task) =>
         apiClient.post("/users/addTask", taskData),
