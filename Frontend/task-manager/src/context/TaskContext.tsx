@@ -1,6 +1,6 @@
 import { createContext, useEffect, useState, type ReactNode } from "react";
 import type { Task } from "../types/Task";
-import { getTasksApi } from "../api/taskApi";
+import { tasksApi } from "../api/taskApi";
 
 interface TaskContextType {
     tasks: Task[];
@@ -17,7 +17,7 @@ export const TaskProvider = ({ children } : { children: ReactNode }) => {
     useEffect(() => {
         const getTasks = async () => {
             try {
-                const data = await getTasksApi();
+                const data = await tasksApi.getTasksByUserId(10).then(response => response.data);
                 setTasks(data);
             } catch (error) {
                 setError((error as Error).message || "Failed to get Tasks");

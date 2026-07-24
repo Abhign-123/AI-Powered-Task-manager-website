@@ -1,5 +1,6 @@
 import React, { useState, type ChangeEvent, type FormEvent } from 'react';
 import type { Task } from '../types/Task';
+import { tasksApi } from "../api/taskApi";
 
 const initialFormState = {
     taskName: "",
@@ -30,7 +31,17 @@ const TaskForm: React.FC<{ isOpen: boolean; onClose: () => void, task?: Task | n
 
     const handleSubmit = (e: FormEvent) => {
         e.preventDefault();
-
+        tasksApi.addTask({
+            taskName: form.taskName,
+            description: form.description,
+            endDate: form.endDate,
+            priority: form.priority,
+            status: form.status,
+            id: 12,
+            startDate: new Date().toISOString().split('T')[0] // Assuming startDate is today
+        }).then(response => {   
+            console.log("Task added successfully:", response.data); }
+        )
         onClose();
     }
 

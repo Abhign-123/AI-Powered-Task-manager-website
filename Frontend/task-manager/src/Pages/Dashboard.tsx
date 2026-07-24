@@ -13,7 +13,6 @@ const Dashboard = () => {
     const [isTaskFormOpen, setIsTaskFormOpen] = useState(false);
     const [filters, setFilters] = useState({ status: "", priority: [] as string[] });
 
-    console.log("Dashboard ", filters);
 
     const filteredTasks = tasks.filter((task) => {
         const matchedPriority = filters.priority.length === 0 || filters.priority.includes(task.priority);
