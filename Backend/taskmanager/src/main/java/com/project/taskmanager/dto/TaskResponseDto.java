@@ -1,40 +1,45 @@
 package com.project.taskmanager.dto;
 
 import com.project.taskmanager.entity.Users;
-import org.springframework.security.core.userdetails.User;
 
-public class TaskDto {
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 
-    Users user;
+public class TaskResponseDto {
+
+    Long id;
     String taskName;
     String description;
     String status;
     String priority;
-    String endDate;
+    LocalDate endDate;
+    LocalDate startDate;
 
-    public TaskDto() {}
-    public TaskDto(String taskName, String description, String status, String priority,  String endDate, Users user) {
+    public TaskResponseDto() {}
+    public TaskResponseDto(Long id, String taskName, String description, String status, String priority,  LocalDate endDate, LocalDate startDate) {
         this.taskName = taskName;
+        this.id=id;
         this.description = description;
         this.status = status;
         this.priority = priority;
         this.endDate = endDate;
-        this.user = user;
+        this.startDate=startDate;
+
     }
 
-    public Users getUser() {
-        return user;
+    public Long getId() {
+        return id;
     }
 
-    public void setUser(Users user) {
-        this.user = user;
+    public void setId(Long id) {
+        this.id = id;
     }
 
-    public String getEndDate() {
+    public LocalDate getEndDate() {
         return endDate;
     }
 
-    public void setEndDate(String endDate) {
+    public void setEndDate(LocalDate endDate) {
         this.endDate = endDate;
     }
 
@@ -69,4 +74,12 @@ public class TaskDto {
     public void setTaskName(String taskName) {
         this.taskName = taskName;
     }
+
+    public LocalDate getStartDate() {
+        return startDate;
+    }
+    public void setStartDate(LocalDate startDate) {
+        this.startDate = startDate;
+    }
 }
+
