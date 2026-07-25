@@ -12,8 +12,6 @@ const ManageTasks = () => {
     const [taskToEdit, setTaskToEdit] = useState<Task | null>(null);
     const [filters, setFilters] = useState({ status: "", priority: [] as string[] });
 
-    console.log("ManageTasks ", filters);
-
     const filteredTasks = tasks.filter((task) => {
         const matchedPriority = filters.priority.length === 0 || filters.priority.includes(task.priority);
         const matchedStatus = filters.status === "" || filters.status.includes(task.status);

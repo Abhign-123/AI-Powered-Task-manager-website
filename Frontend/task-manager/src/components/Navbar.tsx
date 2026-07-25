@@ -112,6 +112,7 @@ const Navbar = () => {
               <div className="py-1">
                 <button
                   type="button"
+                  onClick={() => navigate("/profile")}
                   className="w-full text-left px-4 py-2 font-semibold text-sm text-gray-700 hover:bg-gray-50"
                 >
                   Profile

@@ -7,6 +7,7 @@ import SignUp from "../Pages/SignUp";
 import ManageTasks from "../Pages/ManageTasks";
 import AiTaskAssistant from "../Pages/AiTaskAssistant";
 import { TaskProvider } from "../context/TaskContext";
+import Profile from "../Pages/Profile";
 
 const ProtectedRoute = ({ element }: { element: React.ReactNode }) => {
   const { isLoggedIn } = useAuth();
@@ -23,6 +24,7 @@ const AppRoutes = () => {
         <Route path="/dashboard" element={<ProtectedRoute element={<Dashboard />} />} />
         <Route path="/managetasks" element={<ProtectedRoute element={<ManageTasks />} />} />
       </Route>
+      <Route path="/profile" element={<Profile />} />
       <Route path="/aitaskassistant" element={<ProtectedRoute element={<AiTaskAssistant />} />} />
     </Routes>
   )
