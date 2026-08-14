@@ -8,6 +8,7 @@ import com.project.taskmanager.service.TaskService;
 import com.project.taskmanager.service.UserService;
 import org.apache.catalina.User;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -33,6 +34,7 @@ public class AuthController {
     @PostMapping("/login")
     public ResponseEntity<String> addloginDetails(@RequestBody LoginDto loginDto)
     {
-        return ResponseEntity.ok(authService.login(loginDto));
+        return ResponseEntity.ok().header(
+                HttpHeaders.SET_COOKIE , authService.login(loginDto)).body("Login Successful");
     }
 }

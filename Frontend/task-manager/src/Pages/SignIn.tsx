@@ -41,7 +41,7 @@ const SignIn = () => {
                 {/* Error Message */}
                 {error && (
                     <div className='mb-4 p-3 bg-red-100 text-red-700 border border-red-400 rounded'>
-                        {error}
+                        {"Invalid email or password. Please try again."}
                     </div>
                 )}
                 {/* Form */}
