@@ -5,8 +5,12 @@ import { useAuth } from "../hooks/useAuth";
 const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [open, setOpen] = useState(false);
-  const { isLoggedIn, logout } = useAuth();
+  const { isLoggedIn, loading, logout } = useAuth();
   const navigate = useNavigate();
+
+  if (loading) {
+  return null;
+}
 
   // Common nav menus
   const publicLinks = [

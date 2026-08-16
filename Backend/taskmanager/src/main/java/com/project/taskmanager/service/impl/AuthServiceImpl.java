@@ -16,7 +16,7 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.core.Authentication;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
-
+import org.springframework.web.bind.annotation.CookieValue;
 
 
 @Service
@@ -65,9 +65,46 @@ public class AuthServiceImpl implements AuthService {
                 .secure(false)
                 .path("/")
                 .maxAge(cookieExpiration) // 1 day
-                .sameSite("None")
+                .sameSite("Lax")
                 .build();
 
         return jwtCookie.toString();
     }
+
+    @Override
+    public String logout() {
+        ResponseCookie jwtCookie = ResponseCookie.from("jwtToken", "")
+                .httpOnly(true)
+                .secure(false)
+                .path("/")
+                .maxAge(0) // Set max age to 0 to delete the cookie
+                .sameSite("Lax")
+                .build();
+
+        return jwtCookie.toString();
+    }
+
+    @Override
+    public String checkSession( String jwtToken) {
+        if (jwtToken == null || jwtToken.isEmpty()) {
+            return "No active session";
+        }
+
+        try {
+            String username = jwtUtil.extractUsername(jwtToken);
+
+            if (username != null && !username.isEmpty()
+                    && jwtUtil.isTokenValid(jwtToken, username)) {
+                return "Active session for user: " + username;
+            }
+
+            return "Invalid session";
+
+        } catch (Exception e) {
+            return "Invalid session";
+        }
+
+    }
+
+
 }
