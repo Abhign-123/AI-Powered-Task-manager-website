@@ -77,7 +77,7 @@ export function AuthProvider({ children } : { children: ReactNode }) {
         console.log("Checking session...");
 
         try {
-            const response = await authApi.checkSession();
+             await authApi.checkSession();
 
             // console.log("Session valid:", response.data);
 

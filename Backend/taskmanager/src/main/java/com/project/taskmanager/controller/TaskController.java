@@ -3,7 +3,10 @@ package com.project.taskmanager.controller;
 import com.project.taskmanager.dto.TaskDto;
 import com.project.taskmanager.dto.TaskResponseDto;
 import com.project.taskmanager.entity.Tasks;
+import com.project.taskmanager.entity.Users;
+import com.project.taskmanager.repository.UserRepository;
 import com.project.taskmanager.service.TaskService;
+import org.springframework.security.core.Authentication;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -18,9 +21,16 @@ public class TaskController {
     @Autowired
     private TaskService task;
 
-    @GetMapping("/userTasks/{userId}")
-    public ResponseEntity<List<TaskResponseDto>> getUserTasks(@PathVariable long userId){
-        return new ResponseEntity<>(task.getTasksByUserId(userId), HttpStatus.OK);
+    @Autowired
+    UserRepository userRepository;
+
+    @GetMapping("/userTasks")
+    public ResponseEntity<List<TaskResponseDto>> getUserTasks(Authentication authentication) {
+
+        String email= authentication.getName();
+        Users user = userRepository.findByEmail(email);
+
+        return ResponseEntity.ok(task.getTasksByUserId(user.getId()));
     }
 
     @PostMapping("/addTask")
