@@ -1,9 +1,6 @@
 package com.project.taskmanager.dto;
 
-import com.project.taskmanager.entity.Users;
-
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 
 public class TaskResponseDto {
 

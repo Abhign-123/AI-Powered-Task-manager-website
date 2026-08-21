@@ -1,7 +1,6 @@
 package com.project.taskmanager.dto;
 
 import com.project.taskmanager.entity.Users;
-import org.springframework.security.core.userdetails.User;
 
 public class TaskDto {
 
