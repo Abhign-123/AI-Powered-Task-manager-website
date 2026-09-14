@@ -5,7 +5,6 @@ import org.springframework.security.core.userdetails.User;
 
 public class TaskDto {
 
-    Users user;
     String taskName;
     String description;
     String status;
@@ -13,22 +12,15 @@ public class TaskDto {
     String endDate;
 
     public TaskDto() {}
-    public TaskDto(String taskName, String description, String status, String priority,  String endDate, Users user) {
+    public TaskDto(String taskName, String description, String status, String priority,  String endDate) {
         this.taskName = taskName;
         this.description = description;
         this.status = status;
         this.priority = priority;
         this.endDate = endDate;
-        this.user = user;
+
     }
 
-    public Users getUser() {
-        return user;
-    }
-
-    public void setUser(Users user) {
-        this.user = user;
-    }
 
     public String getEndDate() {
         return endDate;

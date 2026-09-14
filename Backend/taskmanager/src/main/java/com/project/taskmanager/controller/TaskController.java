@@ -34,9 +34,11 @@ public class TaskController {
     }
 
     @PostMapping("/addTask")
-    public ResponseEntity<String> addTask(@RequestBody TaskDto taskDto) throws ParseException {
+    public ResponseEntity<String> addTask(@RequestBody TaskDto taskDto, Authentication authentication) throws ParseException {
         System.out.println("DEBUG: PostMapping /addTask was reached!");
-        task.addTask(taskDto);
+
+        String email = authentication.getName();
+        task.addTask(taskDto, email);
         return ResponseEntity.ok("Task added successfully");
     }
 

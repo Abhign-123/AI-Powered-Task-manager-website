@@ -8,6 +8,8 @@ import com.project.taskmanager.repository.TaskRepository;
 import com.project.taskmanager.repository.UserRepository;
 import com.project.taskmanager.service.TaskService;
 import jakarta.transaction.Transactional;
+import org.springframework.security.core.Authentication;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.config.Task;
 import org.springframework.stereotype.Service;
@@ -50,16 +52,22 @@ public class TaskServiceImpl implements TaskService {
     }
     @Transactional
     @Override
-    public void addTask(TaskDto taskDto) throws ParseException {
+    public void addTask(TaskDto taskDto, String email) throws ParseException {
         Tasks task = new Tasks();
+
+        Users user = userRepository.findByEmail(email);
+        if(user == null){
+            throw new RuntimeException("User not found with email: " + email);
+        }
+        task.setUser(user);
+
         task.setDescription(taskDto.getDescription());
         task.setPriority(taskDto.getPriority());
         task.setName(taskDto.getTaskName());
         task.setDueDate(LocalDate.parse(taskDto.getEndDate()));
         task.setCreationDate(LocalDate.now());
         task.setStatus(taskDto.getStatus());
-
-        task.setUser(taskDto.getUser());
+        
         taskRepository.save(task);
 
     }
