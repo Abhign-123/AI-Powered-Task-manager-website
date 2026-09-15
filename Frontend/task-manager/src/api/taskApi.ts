@@ -1,5 +1,5 @@
 import apiClient from "./client"
-import type { Task } from "../types/Task"
+import type {  CreateTask} from "../types/Task"
 
 
 
@@ -9,7 +9,7 @@ export const tasksApi = {
             
         apiClient.get("/users/userTasks"),
 
-    addTask:(taskData: Task) =>
+    addTask:(taskData: CreateTask) =>
         apiClient.post("/users/addTask", taskData),
 
 }
