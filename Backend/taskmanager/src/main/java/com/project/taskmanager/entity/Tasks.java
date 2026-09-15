@@ -3,8 +3,6 @@ package com.project.taskmanager.entity;
 import jakarta.persistence.*;
 
 import java.time.LocalDate;
-import java.time.LocalDateTime;
-import java.util.Date;
 
 @Entity
 @Table(name="Tasks")

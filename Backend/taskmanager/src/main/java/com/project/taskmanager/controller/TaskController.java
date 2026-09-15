@@ -1,6 +1,7 @@
 package com.project.taskmanager.controller;
 
 import com.project.taskmanager.dto.TaskDto;
+import com.project.taskmanager.dto.TaskPatchRequest;
 import com.project.taskmanager.dto.TaskResponseDto;
 import com.project.taskmanager.entity.Tasks;
 import com.project.taskmanager.entity.Users;
@@ -19,7 +20,7 @@ import java.util.List;
 @RequestMapping("/users")
 public class TaskController {
     @Autowired
-    private TaskService task;
+    private TaskService taskService;
 
     @Autowired
     UserRepository userRepository;
@@ -30,16 +31,26 @@ public class TaskController {
         String email= authentication.getName();
         Users user = userRepository.findByEmail(email);
 
-        return ResponseEntity.ok(task.getTasksByUserId(user.getId()));
+        return ResponseEntity.ok(taskService.getTasksByUserId(user.getId()));
     }
 
     @PostMapping("/addTask")
     public ResponseEntity<String> addTask(@RequestBody TaskDto taskDto, Authentication authentication) throws ParseException {
-        System.out.println("DEBUG: PostMapping /addTask was reached!");
+    	String email= authentication.getName();
+        Users user = userRepository.findByEmail(email);
 
-        String email = authentication.getName();
-        task.addTask(taskDto, email);
+        taskService.addTask(taskDto, user);
         return ResponseEntity.ok("Task added successfully");
     }
 
+    @PatchMapping("/{id}")
+    public ResponseEntity<TaskResponseDto> patchTask(@PathVariable Long id, @RequestBody TaskPatchRequest request) {
+    	return ResponseEntity.ok(taskService.patchTask(id, request));
+    }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Void> deleteTask(@PathVariable Long id) {
+    	taskService.deleteTask(id);
+    	return ResponseEntity.noContent().build();
+    }
 }
