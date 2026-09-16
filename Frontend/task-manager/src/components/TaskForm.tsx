@@ -1,5 +1,5 @@
-import React, {  useState, type ChangeEvent, type FormEvent } from 'react';
-import type { Task } from '../types/Task';
+import React, {  useEffect, useState, type ChangeEvent, type FormEvent } from 'react';
+import type { CreateTask, Task } from '../types/Task';
 import { tasksApi } from "../api/taskApi";
 import { useTasks } from "../hooks/useTasks";
 
@@ -30,36 +30,79 @@ const TaskForm: React.FC<{ isOpen: boolean; onClose: () => void, task?: Task | n
         setForm({ ...form, [e.target.name]: e.target.value });
     };
 
-    const { getTasks , tasks} = useTasks();
+    const { getTasks} = useTasks();
 
-    const taskNames = tasks.map((task)=> task.taskName);
-    console.log(taskNames);
+    useEffect(() => {
+        if (task) {
+            setForm({
+                taskName: task.taskName || "",
+                description: task.description || "",
+                endDate: task.endDate || "",
+                priority: task.priority || "medium",
+                status: task.status || "pending"
+            });
+        } else {
+            setForm(initialFormState);
+        }
+    }, [task]);
+
+    const taskData = {
+        taskName: form.taskName,
+        description: form.description,
+        status: form.status,
+        priority: form.priority
+    };
 
 
     const handleSubmit = (e: FormEvent) => {
     e.preventDefault();
 
-    tasksApi.addTask({
-        taskName: form.taskName,
-        description: form.description,
-        endDate: form.endDate,
-        priority: form.priority,
-        status: form.status,
-        startDate: new Date().toISOString().split("T")[0]
-    })
-    .then(response => {
-        console.log("Task added successfully:", response.data);
+    if (task) {
 
-        onClose();
+        // EDIT
+        const patchData = {
+            ...taskData,
+            dueDate: form.endDate
+        };
 
-        return getTasks();
-    })
-    .then(() => {
-        console.log("Tasks refreshed");
-    })
-    .catch(error => {
-        console.error("Failed to add task:", error);
-    });
+        tasksApi.patchTask(task.id, patchData)
+            .then(response => {
+                console.log("Task updated successfully:", response.data);
+
+                onClose();
+
+                return getTasks();
+            })
+            .then(() => {
+                console.log("Tasks refreshed");
+            })
+            .catch(error => {
+                console.error("Failed to update task:", error);
+            });
+
+    } else {
+
+        // CREATE
+        const createData : CreateTask = {
+            ...taskData,
+            endDate: form.endDate
+        };
+
+        tasksApi.addTask(createData)
+            .then(response => {
+                console.log("Task added successfully:", response.data);
+
+                onClose();
+
+                return getTasks();
+            })
+            .then(() => {
+                console.log("Tasks refreshed");
+            })
+            .catch(error => {
+                console.error("Failed to add task:", error);
+            });
+    }
 };
 
     if (!isOpen) return null;
@@ -179,7 +222,7 @@ const TaskForm: React.FC<{ isOpen: boolean; onClose: () => void, task?: Task | n
                         {/* Cancel Button */}
                         <button
                             type="reset"
-
+                            onClick={onClose}
                             className="px-5 py-2 text-sm font-semibold text-gray-700 border border-gray-400 rounded-md hover:bg-gray-100 transition duration-300"
                         >
                             Cancel

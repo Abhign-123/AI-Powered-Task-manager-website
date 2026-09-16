@@ -1,5 +1,5 @@
 import apiClient from "./client"
-import type {  CreateTask} from "../types/Task"
+import type {  CreateTask, TaskPatchRequest} from "../types/Task"
 
 
 
@@ -11,6 +11,9 @@ export const tasksApi = {
 
     addTask:(taskData: CreateTask) =>
         apiClient.post("/users/addTask", taskData),
+
+    patchTask:(id : number, taskData: TaskPatchRequest )=>
+        apiClient.patch(`/users/patch/${id}`, taskData),
 
     deleteTask:(id:number)=>
         apiClient.delete(`/users/delete/${id}`)
