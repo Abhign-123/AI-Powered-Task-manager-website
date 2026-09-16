@@ -4,10 +4,11 @@ import Filters from "../components/Filters";
 import TaskCard from "../components/TaskCard";
 import { useTasks } from "../hooks/useTasks";
 import type { Task } from "../types/Task";
+import { tasksApi } from "../api/taskApi";
 
 const ManageTasks = () => {
 
-    const { tasks } = useTasks();
+    const { tasks, getTasks } = useTasks();
     const [isTaskFormOpen, setIsTaskFormOpen] = useState(false);
     const [taskToEdit, setTaskToEdit] = useState<Task | null>(null);
     const [filters, setFilters] = useState({ status: "", priority: [] as string[] });
@@ -33,6 +34,17 @@ const ManageTasks = () => {
         setTaskToEdit(null);
         setIsTaskFormOpen(false);
     };
+
+    const handleDelete = (id: number) => {
+    tasksApi.deleteTask(id)
+        .then(response => {
+            console.log("Task deleted successfully:", response.data);
+            return getTasks();
+        })
+        .catch(error => {
+            console.error("Failed to delete task:", error);
+        });
+};
 
     return (
         <div className="min-h-[calc(100vh-120px)] mx-[2vw] px-5">
@@ -73,7 +85,9 @@ const ManageTasks = () => {
                                     >
                                         Edit
                                     </button>
-                                    <button className="px-4 py-1 bg-red-500 text-white rounded-md text-sm hover:bg-red-600">
+                                    <button 
+                                        className="px-4 py-1 bg-red-500 text-white rounded-md text-sm hover:bg-red-600"
+                                        onClick={()=> handleDelete(task.id)}>
                                         Delete
                                     </button>
                                 </div>

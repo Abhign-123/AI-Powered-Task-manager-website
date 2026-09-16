@@ -30,7 +30,10 @@ const TaskForm: React.FC<{ isOpen: boolean; onClose: () => void, task?: Task | n
         setForm({ ...form, [e.target.name]: e.target.value });
     };
 
-    const { getTasks } = useTasks();
+    const { getTasks , tasks} = useTasks();
+
+    const taskNames = tasks.map((task)=> task.taskName);
+    console.log(taskNames);
 
 
     const handleSubmit = (e: FormEvent) => {

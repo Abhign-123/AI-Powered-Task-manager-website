@@ -12,4 +12,7 @@ export const tasksApi = {
     addTask:(taskData: CreateTask) =>
         apiClient.post("/users/addTask", taskData),
 
+    deleteTask:(id:number)=>
+        apiClient.delete(`/users/delete/${id}`)
+
 }
